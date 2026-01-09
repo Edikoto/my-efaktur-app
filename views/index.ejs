@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard E-Faktur Coretax 2026</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="cdnjs.cloudflare.com">
+    <style>
+        @import url('fonts.googleapis.com');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900">
+
+    <div class="flex min-h-screen">
+        <!-- SIDEBAR -->
+        <aside class="w-72 bg-slate-900 text-white hidden lg:flex flex-col sticky top-0 h-screen">
+            <div class="p-8">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/30">
+                        <i class="fa-solid fa-building-columns text-white"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold tracking-tight">CoreTax <span class="text-blue-500">v4.0</span></h1>
+                        <p class="text-[10px] text-slate-400 uppercase tracking-widest font-semibold">Tahun Pajak 2026</p>
+                    </div>
+                </div>
+            </div>
+            
+            <nav class="mt-4 flex-grow px-4 space-y-1">
+                <a href="/" class="flex items-center gap-3 p-3.5 bg-blue-600 text-white rounded-xl transition shadow-md shadow-blue-600/20">
+                    <i class="fa-solid fa-house-chimney w-5 text-center"></i> 
+                    <span class="font-medium">Dashboard</span>
+                </a>
+                <a href="/tambah" class="flex items-center gap-3 p-3.5 text-slate-400 hover:bg-slate-800 hover:text-white rounded-xl transition group">
+                    <i class="fa-solid fa-file-circle-plus w-5 text-center group-hover:text-blue-400 transition"></i> 
+                    <span class="font-medium">Rekam Faktur Baru</span>
+                </a>
+                <a href="#" class="flex items-center gap-3 p-3.5 text-slate-400 hover:bg-slate-800 hover:text-white rounded-xl transition group">
+                    <i class="fa-solid fa-address-book w-5 text-center group-hover:text-blue-400 transition"></i> 
+                    <span class="font-medium">Manajemen NITKU</span>
+                </a>
+                <div class="pt-4 pb-2 px-4 text-[11px] font-bold text-slate-500 uppercase tracking-widest">Laporan</div>
+                <a href="#" class="flex items-center gap-3 p-3.5 text-slate-400 hover:bg-slate-800 hover:text-white rounded-xl transition group">
+                    <i class="fa-solid fa-box-archive w-5 text-center group-hover:text-blue-400 transition"></i> 
+                    <span class="font-medium">SPT Masa PPN</span>
+                </a>
+            </nav>
+
+            <div class="p-6 border-t border-slate-800 bg-slate-900/50">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-600 to-blue-400 flex items-center justify-center text-sm font-bold shadow-inner">
+                        PKP
+                    </div>
+                    <div class="overflow-hidden">
+                        <p class="text-xs font-bold truncate">PT. Inovasi Digital Indonesia</p>
+                        <p class="text-[10px] text-slate-500">ID: 0123456789012345</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="flex-1 overflow-y-auto">
+            <!-- TOP HEADER -->
+            <header class="bg-white border-b border-slate-200 p-6 flex justify-between items-center sticky top-0 z-10 shadow-sm">
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-800">Dashboard Utama</h2>
+                    <p class="text-sm text-slate-500">Selamat datang di sistem administrasi faktur terpadu.</p>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="text-right mr-4 hidden sm:block border-r pr-4 border-slate-200">
+                        <p class="text-[10px] text-slate-400 font-bold uppercase">Status Koneksi</p>
+                        <p class="text-sm font-bold text-green-600 flex items-center justify-end gap-1">
+                            <span class="w-2 h-2 bg-green-500 rounded-full"></span> Online
+                        </p>
+                    </div>
+                    <a href="/tambah" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 transition hover:scale-105 active:scale-95 shadow-lg shadow-blue-600/20">
+                        <i class="fa-solid fa-plus"></i> Buat Faktur
+                    </a>
+                </div>
+            </header>
+
+            <div class="p-8">
+                <!-- STATS CARDS -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:border-blue-300 transition group">
+                        <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">Total Penjualan (DPP)</p>
+                        <div class="flex items-end justify-between mt-2">
+                            <h3 class="text-2xl font-bold text-slate-800">Rp <%= faktur.reduce((a, b) => a + b.dpp, 0).toLocaleString('id-ID') %></h3>
+                            <div class="bg-blue-50 text-blue-600 p-2 rounded-lg group-hover:bg-blue-600 group-hover:text-white transition">
+                                <i class="fa-solid fa-wallet"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:border-red-300 transition group text-right">
+                        <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">PPN Terhutang (11%)</p>
+                        <div class="flex items-end justify-between mt-2 flex-row-reverse">
+                            <h3 class="text-2xl font-bold text-red-600">Rp <%= totalPPN.toLocaleString('id-ID') %></h3>
+                            <div class="bg-red-50 text-red-600 p-2 rounded-lg group-hover:bg-red-600 group-hover:text-white transition text-left">
+                                <i class="fa-solid fa-receipt"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:border-green-300 transition group">
+                        <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">Jumlah Dokumen</p>
+                        <div class="flex items-end justify-between mt-2 text-right">
+                            <h3 class="text-2xl font-bold text-slate-800"><%= faktur.length %> <span class="text-sm font-normal text-slate-400 italic">Faktur</span></h3>
+                            <div class="bg-green-50 text-green-600 p-2 rounded-lg group-hover:bg-green-600 group-hover:text-white transition">
+                                <i class="fa-solid fa-file-lines"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MAIN TABLE AREA -->
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                    <div class="p-6 border-b border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4 bg-slate-50/30">
+                        <div>
+                            <h4 class="font-bold text-slate-800">Daftar Faktur Terdaftar</h4>
+                            <p class="text-xs text-slate-500">Menampilkan seluruh riwayat transaksi pajak keluaran.</p>
+                        </div>
+                        <div class="flex gap-2">
+                            <button class="bg-white border border-slate-200 p-2.5 rounded-xl text-slate-600 hover:bg-slate-100 transition shadow-sm">
+                                <i class="fa-solid fa-download mr-2"></i> Export PDF
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead class="bg-slate-50 text-slate-500 text-[11px] uppercase font-bold tracking-widest border-b border-slate-200">
+                                <tr>
+                                    <th class="p-5">Waktu Transaksi</th>
+                                    <th class="p-5">Identitas Faktur</th>
+                                    <th class="p-5">Pembeli / NPWP16</th>
+                                    <th class="p-5 text-right">DPP (IDR)</th>
+                                    <th class="p-5 text-right text-red-600">PPN (11%)</th>
+                                    <th class="p-5 text-center">Validasi QR</th>
+                                    <th class="p-5 text-center">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-sm text-slate-600 divide-y divide-slate-100">
+                                <% if (faktur.length === 0) { %>
+                                    <tr>
+                                        <td colspan="7" class="p-20 text-center">
+                                            <i class="fa-solid fa-folder-open text-slate-200 text-5xl mb-4 block"></i>
+                                            <p class="text-slate-400 italic">Belum ada data faktur yang terekam.</p>
+                                        </td>
+                                    </tr>
+                                <% } %>
+
+                                <% faktur.forEach(f => { %>
+                                <tr class="hover:bg-slate-50/80 transition group">
+                                    <td class="p-5">
+                                        <div class="flex items-center gap-3">
+                                            <div class="p-2 bg-blue-50 text-blue-600 rounded-lg text-xs font-bold">
+                                                <i class="fa-regular fa-calendar"></i>
+                                            </div>
+                                            <span class="font-medium"><%= f.tanggal %></span>
+                                        </div>
+                                    </td>
+                                    <td class="p-5 font-mono text-[13px]">
+                                        <span class="text-blue-700 font-bold bg-blue-50 px-2 py-1 rounded"><%= f.nomorFaktur %></span>
+                                    </td>
+                                    <td class="p-5">
+                                        <p class="font-bold text-slate-800"><%= f.lawanTransaksi %></p>
+                                        <p class="text-[11px] text-slate-400 font-mono tracking-tighter"><%= f.npwp %></p>
+                                    </td>
+                                    <td class="p-5 text-right font-semibold">Rp <%= f.dpp.toLocaleString('id-ID') %></td>
+                                    <td class="p-5 text-right font-bold text-red-500">Rp <%= f.ppn.toLocaleString('id-ID') %></td>
+                                    <td class="p-5">
+                                        <img src="<%= f.qrImage %>" alt="QR Validasi" class="w-10 h-10 mx-auto rounded shadow-sm border border-slate-200 p-0.5 bg-white group-hover:scale-125 transition cursor-zoom-in">
+                                    </td>
+                                    <td class="p-5 text-center">
+                                        <div class="flex items-center justify-center gap-2">
+                                            <a href="/hapus/<%= f.id %>" class="w-8 h-8 flex items-center justify-center rounded-lg bg-red-50 text-red-500 hover:bg-red-500 hover:text-white transition shadow-sm" onclick="return confirm('Apakah Anda yakin ingin membatalkan faktur ini?')">
+                                                <i class="fa-solid fa-trash-can text-xs"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="p-4 bg-slate-50 border-t border-slate-100 text-[10px] text-slate-400 text-center font-medium">
+                        Sistem ini mensimulasikan integrasi real-time dengan Portal Coretax DJP (Proyeksi 2026).
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>
