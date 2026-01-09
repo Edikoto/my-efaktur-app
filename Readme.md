@@ -29,3 +29,6 @@ Buka web browser Anda dan kunjungi alamat berikut:
 Proyek ini bersifat open source dan terbuka untuk kontribusi.
 Jika Anda ingin menambahkan fitur seperti ekspor PDF asli atau integrasi database yang lebih kuat (seperti MongoDB),
 silakan buat Pull Request atau laporkan Issue.
+#### Akses Aplikasi:
+Buka web browser Anda dan kunjungi alamat berikut:
+http://localhost:3000
